@@ -5,6 +5,8 @@ const PORT = 3000
 
 app.use(express.json())
 
+//Convert celsius to kelvin
+/********************************************************************************************** */
 app.get('/temp', (req, res) => {
     const celsius = parseFloat(req.query.celsius)
 
@@ -13,18 +15,19 @@ app.get('/temp', (req, res) => {
     }
 
     const kelvin = celsius + 273.15
-
+    
     res.json({ 
         celsius: celsius,
         kelvin: kelvin,
      })
-})
+    })
 
-
+//Calculate prime numbers up to a certain limit
+/********************************************************************************************** */
 function calculatePrimes(limit) {
     const primes = []
     const sieve = new Array(limit + 1).fill(true)
-
+    
     for (let i = 2; i * i <= limit; i++) {
         if (sieve[i]) {
             for (let j = i * i; j <= limit; j += i) {
@@ -50,12 +53,14 @@ app.get('/prime', (req, res) => {
     } else if (limit > 10000) {
         return res.status(400).json({ error: "Limit was exceeded" })
     }
-
+    
     const primes = calculatePrimes(limit);
-
+    
     res.json({primes: primes})
 })
 
+//Calculate fibonacci number from a certain number
+/********************************************************************************************** */
 function fibonacci(n) {
     if (n <= 1) {
         return n;
@@ -66,16 +71,18 @@ function fibonacci(n) {
 
 app.get('/number', (req, res) => {
     const n = parseFloat(req.query.n)
-
+    
     if(n > 50) {
         res.status(400).json({ error: "Exceeded Limit of 50" })
     }
-
+    
     const numbers = fibonacci(n)
-
+    
     res.json({numbers: numbers})
 })
 
+//Run Server
+/********************************************************************************************** */
 app.listen(PORT, () => {
     console.log(`server listening on ${PORT}`)
 })
